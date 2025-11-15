@@ -34,7 +34,7 @@ int main() {
 	srand(time(0));
 
 	while (!tollBoothLane.empty()) {
-		cout << "Time " << count++ << " Operation: ";
+		cout << "Time: " << count++ << " Operation: ";
 
 		// Generating a random number between 1 and 100
 		int eventProbabilty = rand() % 100 + 1;
