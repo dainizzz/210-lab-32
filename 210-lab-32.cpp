@@ -14,6 +14,8 @@ const int INITIAL_SIZE = 2;
 void printQueue(const deque<Car> &);
 
 int main() {
+	srand(time(0));
+	int count = 1; // Variable used to track cycles it takes for queue to be empty
 	deque<Car> tollBoothLane(INITIAL_SIZE);
 
 	// Demonstrating deque methods
@@ -29,23 +31,18 @@ int main() {
 	cout << "Initial queue:" << endl;
 	printQueue(tollBoothLane);
 
-	// Initializing variable to track how many cycles it takes until the queue is empty
-	int count = 1;
-	srand(time(0));
-
 	while (!tollBoothLane.empty()) {
 		cout << "Time: " << count++ << " Operation: ";
 
 		// Generating a random number between 1 and 100
-		int eventProbabilty = rand() % 100 + 1;
+		int eventProbability = rand() % 100 + 1;
 
-		if (eventProbabilty <= 55) {
-			// 55% chance: Car at the head pays its toll and leaves the toll booth
+		// 55% chance: Car at the head pays its toll and leaves the toll booth
+		if (eventProbability <= 55) {
 			cout << "Car paid: ";
 			tollBoothLane.front().print();
 			tollBoothLane.pop_front();
-		} else {
-			// 45% chance: Car joins the line for the toll booth
+		} else { // 45% chance: Car joins the line for the toll booth
 			cout << "Joined lane: ";
 			Car newCar;
 			tollBoothLane.push_back(newCar);
