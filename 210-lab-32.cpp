@@ -31,13 +31,26 @@ int main() {
 
 	// Initializing variable to track how many cycles it takes until the queue is empty
 	int count = 1;
+	srand(time(0));
 
 	while (!tollBoothLane.empty()) {
 		cout << "Time " << count++ << " Operation: ";
 
-		// 55% chance: Car at the head pays its toll and leaves the toll booth
+		// Generating a random number between 1 and 100
+		int eventProbabilty = rand() % 100 + 1;
 
-		// 45% chance: Car joins the line for the toll booth
+		if (eventProbabilty <= 55) {
+			// 55% chance: Car at the head pays its toll and leaves the toll booth
+			cout << "Car paid: ";
+			tollBoothLane.front().print();
+			tollBoothLane.pop_front();
+		} else {
+			// 45% chance: Car joins the line for the toll booth
+			cout << "Joined lane: ";
+			Car newCar;
+			tollBoothLane.push_back(newCar);
+			tollBoothLane.back().print();
+		}
 
 		cout << "Queue:" << endl;
 		printQueue(tollBoothLane);
