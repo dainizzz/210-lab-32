@@ -14,34 +14,43 @@ const int INITIAL_SIZE = 2;
 void printQueue(const deque<Car> &);
 
 int main() {
-	/*Use the Car class to create Car objects, which are placed in the std::deque representing the toll booth lane.
-	 *After each time period, display the queue using the .print() method in the Car class.*/
-
-	deque<Car> cars(INITIAL_SIZE);
+	deque<Car> tollBoothLane(INITIAL_SIZE);
 
 	// Demonstrating deque methods
 	// Accessing the first element and calling the print() method
 	cout << "The first car in the queue is: ";
-	cars.front().print();
+	tollBoothLane.front().print();
 	// Accessing the element at index 1 and calling the print() method
 	cout << "The car at index 1 is: ";
-	cars[1].print();
+	tollBoothLane[1].print();
 	// Checking how many items are in the deque
-	cout << "The number of cars currently in the queue is: " << cars.size() << endl;
+	cout << "The number of cars currently in the queue is: " << tollBoothLane.size() << endl << endl;
 
 	cout << "Initial queue:" << endl;
-	printQueue(cars);
+	printQueue(tollBoothLane);
 
-	//while (!cars.empty()) {
-		// Each loop simulates the time period
+	// Initializing variable to track how many cycles it takes until the queue is empty
+	int count = 1;
+
+	while (!tollBoothLane.empty()) {
+		cout << "Time " << count++ << " Operation: ";
+
 		// 55% chance: Car at the head pays its toll and leaves the toll booth
+
 		// 45% chance: Car joins the line for the toll booth
-	//}
+
+		cout << "Queue:" << endl;
+		printQueue(tollBoothLane);
+	}
 }
 
-void printQueue(const deque<Car> &cars) {
-	// TODO: Check for empty queue & print empty
-	for (auto car : cars) {
-		car.print();
+void printQueue(const deque<Car> &tollBoothLane) {
+	if (tollBoothLane.empty())
+		cout << "\tEmpty" << endl;
+	else {
+		for (Car car : tollBoothLane) {
+			cout << '\t';
+			car.print();
+		}
 	}
 }
