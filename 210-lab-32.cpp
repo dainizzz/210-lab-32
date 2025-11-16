@@ -11,6 +11,7 @@ const int NUM_LANES = 4;
 const int CHANCE_PAY = 46;
 const int CHANCE_JOIN = 39;
 const int CHANCE_SWITCH = 15;
+const int CHANCE_JOIN_EMPTY = 50;
 
 // printQueue() calls the print() method on each object in the queue of Car objects.
 // arguments: a deque of Car objects
@@ -57,42 +58,46 @@ int main() {
 		// OPERATIONS
 		for (int lane = 0; lane < NUM_LANES; lane++) {
 			cout << "Lane: " << lane + 1;
-
-			// If a lane is currently empty but there is still more time in the simulation, those probabilities will be just 50/50 if a new car enters the queue or not.
-			if (tollBoothLanes[lane].empty()) {
-
-			}
+			bool eventOccurred = false;
 
 			// Generating a random number between 1 and 100
 			int eventProbability = rand() % 100 + 1;
 
-			// Operation 1: Car at the head pays its toll and leaves the toll booth
-			if (eventProbability <= CHANCE_PAY) {
-				if (!tollBoothLanes[lane].empty()) {
-					// Added to avoid error of trying to pop from empty deque
+			// SPECIAL CASE: If the lane is empty, a car joins
+			if (tollBoothLanes[lane].empty()) {
+				if (eventProbability <= CHANCE_JOIN_EMPTY) {
+					cout << " Joined: ";
+					Car newCar;
+					tollBoothLanes[lane].push_back(newCar);
+					tollBoothLanes[lane].back().print();
+				}
+			} else {
+				// Operation 1: Car at the head pays its toll and leaves the toll booth
+				if (eventProbability <= CHANCE_PAY) {
 					cout << " Paid: ";
 					tollBoothLanes[lane].front().print();
 					tollBoothLanes[lane].pop_front();
 				}
-			}
 
-			// Operation 2: Car joins the line for the toll booth
-			if (eventProbability <= CHANCE_JOIN) {
-				cout << " Joined: ";
-				Car newCar;
-				tollBoothLanes[lane].push_back(newCar);
-				tollBoothLanes[lane].back().print();
-			}
+				// Operation 2: Car joins the line for the toll booth
+				if (eventProbability <= CHANCE_JOIN) {
+					cout << " Joined: ";
+					Car newCar;
+					tollBoothLanes[lane].push_back(newCar);
+					tollBoothLanes[lane].back().print();
+				}
 
-			// Operation 3: Rear car switches lanes
-			if (eventProbability <= CHANCE_SWITCH) {
-				cout << " Switched: ";
-				tollBoothLanes[lane].back().print();
-				int newLane = getRandomNewLane(lane);
-				tollBoothLanes[newLane].push_back(tollBoothLanes[lane].back());
-				tollBoothLanes[lane].pop_back();
+				// Operation 3: Rear car switches lanes
+				if (eventProbability <= CHANCE_SWITCH) {
+					cout << " Switched: ";
+					tollBoothLanes[lane].back().print();
+					int newLane = getRandomNewLane(lane);
+					tollBoothLanes[newLane].push_back(tollBoothLanes[lane].back());
+					tollBoothLanes[lane].pop_back();
+				}
 			}
 		}
+
 		// QUEUE AFTER OPERATIONS
 		int laneNum = 1;
 		for (const deque<Car> &lane: tollBoothLanes) {
