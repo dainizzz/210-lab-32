@@ -15,12 +15,9 @@ const int NUM_LANES = 4;
 void printQueue(const deque<Car> &);
 
 /* TODO:
- * - Add more lanes
  * - Add switching lanes
  * - Update probabilities
- * - Update how long simulation runs
  */
-
 
 int main() {
 	srand(time(0));
@@ -30,44 +27,44 @@ int main() {
 	deque<Car> tollBoothLanes[NUM_LANES];
 	// Iterating through the array to update the values in the deque stored at that index
 	for (int i = 0; i < NUM_LANES; i++) {
-		for (int j = 0; j < INITIAL_SIZE; j++) {
+		for (int j = 0; j < INITIAL_SIZE; j++) { // Populating the plaza with 2 cars before the simulation runs
 			Car newCar;
 			tollBoothLanes[i].push_back(newCar);
 		}
 	}
 
-	// Validating that data is being stored correctly (should print statements showing 4 lanes with 2 cars each)
+	// Outputting current deque status before simulation
+	cout << "Initial queue:" << endl;
 	for (deque<Car> lane : tollBoothLanes) {
 		static int laneNum = 1;
-		cout << "Toll booth lane #" << laneNum << ':' << endl;
+		cout << "Lane " << laneNum << ':' << endl;
 		printQueue(lane);
 		laneNum++;
 	}
 
-	// cout << "Initial queue:" << endl;
-	// printQueue(tollBoothLane);
-	//
-	// while (!tollBoothLane.empty()) {
-	// 	cout << "Time: " << count++ << " Operation: ";
-	//
-	// 	// Generating a random number between 1 and 100
-	// 	int eventProbability = rand() % 100 + 1;
-	//
-	// 	// 55% chance: Car at the head pays its toll and leaves the toll booth
-	// 	if (eventProbability <= 55) {
-	// 		cout << "Car paid: ";
-	// 		tollBoothLane.front().print();
-	// 		tollBoothLane.pop_front();
-	// 	} else { // 45% chance: Car joins the line for the toll booth
-	// 		cout << "Joined lane: ";
-	// 		Car newCar;
-	// 		tollBoothLane.push_back(newCar);
-	// 		tollBoothLane.back().print();
-	// 	}
-	//
-	// 	cout << "Queue:" << endl;
-	// 	printQueue(tollBoothLane);
-	// }
+	// Running the simulation for 20 time periods
+	for (int i = 0; i < 20; i++) {
+		for (deque<Car> lane : tollBoothLanes) {
+			cout << "Time: " << count++;
+
+			// Generating a random number between 1 and 100
+			int eventProbability = rand() % 100 + 1;
+
+			// 50% chance: Car at the head pays its toll and leaves the toll booth
+			if (eventProbability <= 50) {
+				cout << " Paid: ";
+				lane.front().print();
+				lane.pop_front();
+			} else { // 50% chance: Car joins the line for the toll booth
+				cout << " Joined: ";
+				Car newCar;
+				lane.push_back(newCar);
+				lane.back().print();
+			}
+		}
+	}
+
+
 }
 
 void printQueue(const deque<Car> &tollBoothLane) {
