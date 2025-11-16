@@ -27,7 +27,8 @@ int main() {
 	deque<Car> tollBoothLanes[NUM_LANES];
 	// Iterating through the array to update the values in the deque stored at that index
 	for (int i = 0; i < NUM_LANES; i++) {
-		for (int j = 0; j < INITIAL_SIZE; j++) { // Populating the plaza with 2 cars before the simulation runs
+		for (int j = 0; j < INITIAL_SIZE; j++) {
+			// Populating the plaza with 2 cars before the simulation runs
 			Car newCar;
 			tollBoothLanes[i].push_back(newCar);
 		}
@@ -35,17 +36,20 @@ int main() {
 
 	// Outputting current deque status before simulation
 	cout << "Initial queue:" << endl;
-	for (deque<Car> lane : tollBoothLanes) {
+	for (const deque<Car>& lane: tollBoothLanes) {
 		static int laneNum = 1;
 		cout << "Lane " << laneNum << ':' << endl;
 		printQueue(lane);
 		laneNum++;
 	}
+	cout << endl;
 
 	// Running the simulation for 20 time periods
 	for (int i = 0; i < 20; i++) {
-		for (deque<Car> lane : tollBoothLanes) {
-			cout << "Time: " << count++;
+		cout << " Time: " << count++ << endl;
+		// OPERATIONS
+		for (int j = 0; j < NUM_LANES; j++)  {
+			cout << "Lane: " << j + 1;
 
 			// Generating a random number between 1 and 100
 			int eventProbability = rand() % 100 + 1;
@@ -53,25 +57,30 @@ int main() {
 			// 50% chance: Car at the head pays its toll and leaves the toll booth
 			if (eventProbability <= 50) {
 				cout << " Paid: ";
-				lane.front().print();
-				lane.pop_front();
-			} else { // 50% chance: Car joins the line for the toll booth
+				tollBoothLanes[j].front().print();
+				tollBoothLanes[j].pop_front();
+			} else {
+				// 50% chance: Car joins the line for the toll booth
 				cout << " Joined: ";
 				Car newCar;
-				lane.push_back(newCar);
-				lane.back().print();
+				tollBoothLanes[j].push_back(newCar);
+				tollBoothLanes[j].back().print();
 			}
 		}
+		// QUEUE AFTER OPERATIONS
+		int laneNum = 1;
+		for (const deque<Car>& lane: tollBoothLanes) {
+			cout << "Lane " << laneNum++ << " Queue:" << endl;
+			printQueue(lane);
+		}
 	}
-
-
 }
 
 void printQueue(const deque<Car> &tollBoothLane) {
 	if (tollBoothLane.empty())
 		cout << "\tEmpty" << endl;
 	else {
-		for (Car car : tollBoothLane) {
+		for (Car car: tollBoothLane) {
 			cout << '\t';
 			car.print();
 		}
