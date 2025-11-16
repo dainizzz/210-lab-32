@@ -13,6 +13,14 @@ const int INITIAL_SIZE = 2;
 // returns: nothing
 void printQueue(const deque<Car> &);
 
+/* TODO:
+ * - Add more lanes
+ * - Add switching lanes
+ * - Update probabilities
+ * - Update how long simulation runs
+ */
+
+
 int main() {
 	srand(time(0));
 	int count = 1; // Variable used to track cycles it takes for queue to be empty
