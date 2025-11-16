@@ -28,11 +28,20 @@ int main() {
 	int count = 1;
 	// Initializing an array of 4 toll booth lanes
 	deque<Car> tollBoothLanes[NUM_LANES];
-	// Iterating through the array to update its values
+	// Iterating through the array to update the values in the deque stored at that index
 	for (int i = 0; i < NUM_LANES; i++) {
-		printQueue(tollBoothLanes[i]);
-		tollBoothLanes[i] = deque<Car>(INITIAL_SIZE);
-		printQueue(tollBoothLanes[i]);
+		for (int j = 0; j < INITIAL_SIZE; j++) {
+			Car newCar;
+			tollBoothLanes[i].push_back(newCar);
+		}
+	}
+
+	// Validating that data is being stored correctly (should print statements showing 4 lanes with 2 cars each)
+	for (deque<Car> lane : tollBoothLanes) {
+		static int laneNum = 1;
+		cout << "Toll booth lane #" << laneNum << ':' << endl;
+		printQueue(lane);
+		laneNum++;
 	}
 
 	// cout << "Initial queue:" << endl;
