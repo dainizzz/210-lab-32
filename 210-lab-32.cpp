@@ -70,6 +70,7 @@ int main() {
 					Car newCar;
 					tollBoothLanes[lane].push_back(newCar);
 					tollBoothLanes[lane].back().print();
+					eventOccurred = true;
 				}
 			} else {
 				// Operation 1: Car at the head pays its toll and leaves the toll booth
@@ -77,6 +78,7 @@ int main() {
 					cout << " Paid: ";
 					tollBoothLanes[lane].front().print();
 					tollBoothLanes[lane].pop_front();
+					eventOccurred = true;
 				}
 
 				// Operation 2: Car joins the line for the toll booth
@@ -85,6 +87,7 @@ int main() {
 					Car newCar;
 					tollBoothLanes[lane].push_back(newCar);
 					tollBoothLanes[lane].back().print();
+					eventOccurred = true;
 				}
 
 				// Operation 3: Rear car switches lanes
@@ -94,8 +97,12 @@ int main() {
 					int newLane = getRandomNewLane(lane);
 					tollBoothLanes[newLane].push_back(tollBoothLanes[lane].back());
 					tollBoothLanes[lane].pop_back();
+					eventOccurred = true;
 				}
 			}
+
+			if (!eventOccurred)
+				cout << " No change" << endl;
 		}
 
 		// QUEUE AFTER OPERATIONS
