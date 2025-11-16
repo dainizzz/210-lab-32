@@ -50,14 +50,18 @@ int main() {
 		printQueue(lane);
 		laneNum++;
 	}
-	cout << endl;
 
 	// Running the simulation for 20 time periods
 	for (int i = 0; i < 20; i++) {
-		cout << " Time: " << count++ << endl;
+		cout << "\nTime: " << count++ << endl;
 		// OPERATIONS
 		for (int lane = 0; lane < NUM_LANES; lane++) {
 			cout << "Lane: " << lane + 1;
+
+			// If a lane is currently empty but there is still more time in the simulation, those probabilities will be just 50/50 if a new car enters the queue or not.
+			if (tollBoothLanes[lane].empty()) {
+
+			}
 
 			// Generating a random number between 1 and 100
 			int eventProbability = rand() % 100 + 1;
