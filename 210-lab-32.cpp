@@ -80,10 +80,13 @@ int main() {
 				tollBoothLanes[lane].back().print();
 			}
 
-			// Operation: Rear car switches lanes
+			// Operation 3: Rear car switches lanes
 			if (eventProbability <= CHANCE_SWITCH) {
 				cout << " Switched: ";
-
+				tollBoothLanes[lane].back().print();
+				int newLane = getRandomNewLane(lane);
+				tollBoothLanes[newLane].push_back(tollBoothLanes[lane].back());
+				tollBoothLanes[lane].pop_back();
 			}
 		}
 		// QUEUE AFTER OPERATIONS
@@ -107,5 +110,8 @@ void printQueue(const deque<Car> &tollBoothLane) {
 }
 
 int getRandomNewLane(int curLane) {
-
+	int newLane = rand() % 4;
+	while (newLane == curLane)
+		newLane = rand() % 4;
+	return newLane;
 }
