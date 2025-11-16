@@ -48,23 +48,26 @@ int main() {
 	for (int i = 0; i < 20; i++) {
 		cout << " Time: " << count++ << endl;
 		// OPERATIONS
-		for (int j = 0; j < NUM_LANES; j++)  {
-			cout << "Lane: " << j + 1;
+		for (int lane = 0; lane < NUM_LANES; lane++)  {
+			cout << "Lane: " << lane + 1;
 
 			// Generating a random number between 1 and 100
 			int eventProbability = rand() % 100 + 1;
 
 			// 50% chance: Car at the head pays its toll and leaves the toll booth
 			if (eventProbability <= 50) {
-				cout << " Paid: ";
-				tollBoothLanes[j].front().print();
-				tollBoothLanes[j].pop_front();
+				if (!tollBoothLanes[lane].empty()) { // Added to avoid error of trying to pop from empty deque
+					cout << " Paid: ";
+					tollBoothLanes[lane].front().print();
+					tollBoothLanes[lane].pop_front();
+				}
+
 			} else {
 				// 50% chance: Car joins the line for the toll booth
 				cout << " Joined: ";
 				Car newCar;
-				tollBoothLanes[j].push_back(newCar);
-				tollBoothLanes[j].back().print();
+				tollBoothLanes[lane].push_back(newCar);
+				tollBoothLanes[lane].back().print();
 			}
 		}
 		// QUEUE AFTER OPERATIONS
