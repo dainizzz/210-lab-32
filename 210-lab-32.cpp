@@ -23,11 +23,6 @@ void printQueue(const deque<Car> &);
 // returns: an int value representing a new lane as a 0-based index
 int getRandomNewLane(int);
 
-/* TODO:
- * - Add switching lanes
- * - Update probabilities
- */
-
 int main() {
 	srand(time(0));
 	// Variable used to track cycles it takes for queue to be empty
